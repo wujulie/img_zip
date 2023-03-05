@@ -1,10 +1,13 @@
+
 import os
 from os import walk
 from PIL import Image
 from os.path import join
+import tkinter as tk
+from tkinter import filedialog
 
-dirpath = '/Users/julie/PycharmProjects/folder_zip/ori'#原始路徑
-newpath ='/Users/julie/PycharmProjects/folder_zip/new'#原始路徑
+
+
 
 def img_zip(ori_path,new_path):
     all_img_name = [f for f in os.listdir(ori_path) if os.path.isfile(os.path.join(ori_path, f))]  # 圖片名稱
@@ -20,30 +23,29 @@ def img_zip(ori_path,new_path):
                 for name in all_img_name:
                     current_img.save(new_path + "/" + name, quality=quality,
                                      optimize=True)  # 壓縮新圖片到new_img_path
-                    current_img = Image.open(new_path + "/" + name)  # 更新 current_img 为压缩后的新图片
+                    current_img = Image.open(new_path + "/" + name)  # 更新 current_img 為壓縮後的圖片
                     # 更新 current_size 為壓縮後新圖片大小
                     current_size = os.path.getsize(new_path + "/" + name)
                     quality -= step
 
-def create_folder_bylist():
-    case_list = ["one", "two", "three"]
-    for folder in case_list:
-        if not os.path.isdir(folder):
-            os.mkdir(folder)
-
-def create_folder_bycsv():
-    case_list = ["one", "two", "three"]
-    for folder in case_list:
-        if not os.path.isdir(folder):
-            os.mkdir(folder)
 
 def main():
+    print("請選擇你的原始圖片資料夾\n")
+    root = tk.Tk()
+    root.withdraw()
+    dirpath = filedialog.askdirectory()
+    print(dirpath)
+    print("請選擇你的輸出圖片資料夾\n")
+    output = tk.Tk()
+    output.withdraw()
+    newpath = filedialog.askdirectory()
+    print(newpath)
     img_zip(dirpath, newpath)
-    create_folder_bylist()
 
 
-
-
+#
+#
+#
 if __name__ == '__main__':
     main()
 
